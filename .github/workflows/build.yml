@@ -1,1 +1,49 @@
+name: Build installateurs multiplateformes
 
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Recuperer le code
+        uses: actions/checkout@v4
+
+      - name: Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Installer les dependances
+        run: npm install
+
+      - name: Construire l'installateur Windows
+        if: matrix.os == 'windows-latest'
+        run: npm run dist:win
+
+      - name: Construire l'installateur macOS
+        if: matrix.os == 'macos-latest'
+        run: npm run dist:mac
+
+      - name: Construire l'installateur Linux
+        if: matrix.os == 'ubuntu-latest'
+        run: npm run dist:linux
+
+      - name: Publier les fichiers generes
+        uses: actions/upload-artifact@v4
+        with:
+          name: GestionCommerciale-${{ matrix.os }}
+          path: |
+            dist/*.exe
+            dist/*.dmg
+            dist/*.AppImage
+            dist/*.deb
+          if-no-files-found: ignore
