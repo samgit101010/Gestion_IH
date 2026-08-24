@@ -1,0 +1,57 @@
+{
+  "name": "gestion-commerciale",
+  "version": "1.1.0",
+  "description": "Logiciel de gestion commerciale - Achats, Ventes, Facturation",
+  "author": "Ingenieur SAMINOU Mahaman Chapiou - SAM Tech Solutions <samtechsolutions08@gmail.com>",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win --mac --linux",
+    "dist:win": "electron-builder --win",
+    "dist:mac": "electron-builder --mac",
+    "dist:linux": "electron-builder --linux"
+  },
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.samtechsolutions.gestioncommerciale",
+    "productName": "GestionCommerciale",
+    "copyright": "Copyright (c) 2026 SAM Tech Solutions",
+    "icon": "build/icon.png",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "app/**/*"
+    ],
+    "win": {
+      "target": [
+        { "target": "nsis", "arch": ["x64"] }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "artifactName": "setup.exe",
+      "shortcutName": "GestionCommerciale"
+    },
+    "mac": {
+      "target": ["dmg"],
+      "category": "public.app-category.business"
+    },
+    "linux": {
+      "target": ["AppImage", "deb"],
+      "category": "Office",
+      "executableName": "gestion-commerciale"
+    }
+  }
+}
