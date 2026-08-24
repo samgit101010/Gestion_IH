@@ -41,8 +41,9 @@
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "artifactName": "setup.exe",
-      "shortcutName": "GestionCommerciale"
+      "artifactName": "GestionCommerciale-${version}-setup.exe",
+      "shortcutName": "GestionCommerciale",
+      "warningsAsErrors": false
     },
     "mac": {
       "target": ["dmg"],
